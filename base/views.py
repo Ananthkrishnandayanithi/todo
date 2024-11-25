@@ -29,7 +29,13 @@ class TaskList(LoginRequiredMixin, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         # Count the tasks where 'complex' is False
         context['task_count'] = context['tasks'].filter(complex=False).count()
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(
+                title__icontains=search_input  # Corrected the lookup
+            )
         return context
+
 
 class RegisterPage(FormView):
     template_name = 'base/register.html'
