@@ -1,1 +1,83 @@
-<h1> Task Details:{{task }} </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Task Details Page">
+    <title>Task Details</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS -->
+    <style>
+        body {
+            /* Same vibrant gradient background */
+            background: radial-gradient(circle, rgba(255, 153, 0, 1) 0%, rgba(255, 204, 0, 1) 40%, rgba(0, 102, 204, 1) 100%);
+            font-family: 'Open Sans', sans-serif; /* Normal font */
+            padding: 20px;
+            margin: 0;
+            color: rgb(0, 0, 0); /* Text color for readability */
+            min-height: 100vh; /* Full viewport coverage */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white for contrast */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin: 20px 0;
+            text-shadow: none; /* No shadow for simplicity */
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .task-actions a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .task-actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Details: {{ task.title }}</h1>
+        <p>Description: {{ task.description }}</p>
+        <p>Complete: {{ task.complete }}</p>
+        <p>Complex: {{ task.complex }}</p>
+        <div class="task-actions">
+            <a href="{% url 'task-update' task.id %}">Edit</a>
+            <a href="{% url 'task-delete' task.id %}">Delete</a>
+            <a href="/">Back to Tasks</a>
+        </div>
+    </div>
+</body>
+</html>
