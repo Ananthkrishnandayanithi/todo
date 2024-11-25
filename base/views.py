@@ -3,25 +3,52 @@ from django.views.generic.detail import DetailView
 from .models import Task
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
-class TaskList(ListView):
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
+class CustomLoginView(LoginView):
+    template_name= 'base/login.html'
+    model =  Task
+    fields= '__all__'
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('task-list')
+    
+
+class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
 
-class TaskDetail(DetailView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Filter tasks to include only those for the current user
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        # Count the tasks where 'complex' is False
+        context['task_count'] = context['tasks'].filter(complex=False).count()
+        return context
+
+    
+
+class TaskDetail(LoginRequiredMixin,DetailView):
     model = Task
     context_object_name = 'task'
     template_name = 'base/task.html'
 
-class TaskCreate(CreateView):
-    model =  Task
-    fields= '__all__'
+class TaskCreate(LoginRequiredMixin, CreateView):
+    model = Task
+    fields = ['title', 'description', 'complete', 'complex']  # Exclude 'user' from fields
     success_url = reverse_lazy('task-list')
 
-class TaskUpdate(UpdateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # Associate the task with the logged-in user
+        return super().form_valid(form)
+    
+
+class TaskUpdate(LoginRequiredMixin,UpdateView):
     model =  Task
-    fields= '__all__'
+    fields= ['title', 'description', 'complete', 'complex']
     success_url = reverse_lazy('task-list')
-class TaskDelete(DeleteView):
+class TaskDelete(LoginRequiredMixin,DeleteView):
     model = Task
     context_object_name = 'task'
     success_url = reverse_lazy('task-list')  # Redirect to task list after successful deletion
