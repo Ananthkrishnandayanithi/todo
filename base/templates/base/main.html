@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>To Do Items</title>
+    <meta name="description" content="A simple To-Do Items web page.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+            body{
+            background-color: lightgray; 
+            font-family: Arial, sans-serif; /* Added a default font-family */
+        }
+        .container {
+            margin: 20px auto; /* Center the content horizontally */
+            max-width: 600px; /* Limit the container width */
+            background: white; /* White background for content */
+            padding: 20px; /* Add some padding */
+            border-radius: 8px; /* Add rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>

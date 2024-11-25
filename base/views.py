@@ -9,6 +9,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import redirect  # Add this import
 
+from django.shortcuts import render
+from django.views.generic import TemplateView
+def home(request):
+    return render(request, 'base/main.html')  # Adjust the template path if needed
+
+class HomePage(TemplateView):
+    template_name = 'base/main.html'
 class CustomLoginView(LoginView):
     template_name= 'base/login.html'
     model =  Task

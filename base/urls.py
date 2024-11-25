@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterPage, TaskList, TaskDetail, TaskCreate, TaskUpdate, TaskDelete, CustomLoginView
+from .views import RegisterPage, TaskList, TaskDetail, TaskCreate, TaskUpdate, TaskDelete, CustomLoginView,home
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
