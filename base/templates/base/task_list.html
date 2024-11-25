@@ -1,37 +1,123 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<style>
+    .user-info p {
+        font-weight: bold;
+        font-size: 18px; /* Adjust size to make it prominent */
+        color: black;
+        font-family: 'Open Sans', sans-serif; /* Stylish font */
+        margin-bottom: 10px;
+    }
 
+    .user-info button, .user-info a {
+        font-weight: bold;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-{% if request.user.is_authenticated %}
-  <p>{{ request.user }}</p>
-  <form action="{% url 'logout' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-  </form>
-{% else %}
-  <a href="{% url 'login' %}">Login</a>
-{% endif %}
+    .user-info button:hover, .user-info a:hover {
+        background-color: #0056b3;
+    }
+
+    .task-box {
+        background: #ffef96; /* Sticky note yellow */
+        border: 1px solid #f7dc6f;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px; /* Add spacing between rows */
+        word-wrap: break-word;
+        transition: transform 0.2s ease;
+    }
+
+    .task-box:hover {
+        transform: scale(1.05);
+    }
+
+    .task-box h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .task-box .task-actions a {
+        display: inline-block;
+        margin: 5px 10px 0 0;
+        padding: 5px 10px;
+        font-size: 14px;
+        color: white;
+        background: #007bff;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .task-box .task-actions a:hover {
+        background: #0056b3;
+    }
+
+    .add-task-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .search-form input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-form button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="user-info">
+    {% if request.user.is_authenticated %}
+        <p>Welcome, {{ request.user }}</p>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
 <hr>
 <h1>My Todo List</h1>
 
-<a href="{% url 'task-create' %}">Add Task</a>
-<form method="GET">
-   <input type='text' name='search-area'>
-   <input type='submit' value='search'>
-</form>
-<table>
-   <tr>
-      <th>Item</th>
-      <th>Action</th>
-   </tr>
-   {% for task in tasks %}
-   <tr>
-      <td>{{ task.title }}</td>
-      <td><a href="{% url 'task-detail' task.id %}">View</a></td>
-      <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
-      <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
-   </tr>
-   {% empty %}
-   <tr>
-      <td colspan="2"><h3>No items in list</h3></td>
-   </tr>
-   {% endfor %}
-</table>
+<div class="actions">
+    <a href="{% url 'task-create' %}" class="add-task-btn">+ Add Task</a>
+    <form method="GET" class="search-form">
+        <input type="text" name="search-area" placeholder="Search tasks...">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+{% for task in tasks %}
+    <div class="task-box">
+        <h2>{{ task.title }}</h2>
+        <div class="task-actions">
+            <a href="{% url 'task-detail' task.id %}">View</a>
+            <a href="{% url 'task-update' task.id %}">Edit</a>
+            <a href="{% url 'task-delete' task.id %}">Delete</a>
+        </div>
+    </div>
+{% empty %}
+    <h3>No items in the list</h3>
+{% endfor %}
+{% endblock content %}

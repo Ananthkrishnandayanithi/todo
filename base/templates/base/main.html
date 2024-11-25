@@ -3,27 +3,139 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>To Do Items</title>
-    <meta name="description" content="A simple To-Do Items web page.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple To-Do Items web page.">
+    <title>To Do Items</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS -->
     <style>
-            body{
-            background-color: lightgray; 
-            font-family: Arial, sans-serif; /* Added a default font-family */
+        body {
+            /* Create a vibrant Dragon Ball-inspired gradient background */
+            background: radial-gradient(circle, rgba(255, 153, 0, 1) 0%, rgba(255, 204, 0, 1) 40%, rgba(0, 102, 204, 1) 100%);
+            font-family: 'Open Sans', sans-serif;
+            padding: 20px;
+            margin: 0;
+            color: rgb(0, 0, 0); /* Text color for better readability */
+            min-height: 100vh; /* Ensure the background covers the full viewport */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         .container {
-            margin: 20px auto; /* Center the content horizontally */
-            max-width: 600px; /* Limit the container width */
-            background: white; /* White background for content */
-            padding: 20px; /* Add some padding */
-            border-radius: 8px; /* Add rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white for contrast */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Bungee Spice", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: #000000; /* Black color for headings */
+            text-shadow: none; /* Remove text shadow */
+            margin: 10px 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .user-info {
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .add-task-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .search-form input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .tasks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .task-box {
+            background: #ffef96; /* Sticky note yellow */
+            border: 1px solid #f7dc6f;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+            word-wrap: break-word;
+        }
+
+        .task-box h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .task-box .task-actions a {
+            display: inline-block;
+            margin: 5px 10px 0 0;
+            padding: 5px 10px;
+            font-size: 14px;
+            color: white;
+            background: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .task-box .task-actions a:hover {
+            background: #0056b3;
+        }
+
+        .task-box:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <h1>To-Do List</h1>
+        <h2>Manage your tasks effectively</h2>
+        <h3>Track, organize, and complete your goals</h3>
+        <h4>Set priorities for better productivity</h4>
+        <h5>Never miss deadlines</h5>
+        <h6>Start now!</h6>
         {% block content %}
+        <!-- Content goes here -->
         {% endblock content %}
     </div>
 </body>
