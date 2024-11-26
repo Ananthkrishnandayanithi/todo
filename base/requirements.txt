@@ -1,0 +1,5 @@
+Django==4.x.x          
+djangorestframework==3.x.x  
+pytz==2024.x          
+sqlparse==0.4.x        
+asgiref==3.x.x       
